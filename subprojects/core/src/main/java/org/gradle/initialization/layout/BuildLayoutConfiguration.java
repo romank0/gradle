@@ -28,15 +28,13 @@ import java.io.File;
 @UsedByScanPlugin
 public class BuildLayoutConfiguration {
     private final File currentDir;
-    private final boolean searchUpwards;
     private final File settingsFile;
-    private final boolean useEmptySettings;
+    private final boolean searchUpwards;
 
     public BuildLayoutConfiguration(StartParameter startParameter) {
         currentDir = startParameter.getCurrentDir();
-        searchUpwards = ((StartParameterInternal)startParameter).isSearchUpwardsWithoutDeprecationWarning() && !isInitTaskRequested(startParameter);
+        searchUpwards = ((StartParameterInternal)startParameter).isSearchUpwards() && !isInitTaskRequested(startParameter);
         settingsFile = startParameter.getSettingsFile();
-        useEmptySettings = ((StartParameterInternal)startParameter).isUseEmptySettingsWithoutDeprecationWarning();
     }
 
     private boolean isInitTaskRequested(StartParameter startParameter) {
@@ -64,6 +62,6 @@ public class BuildLayoutConfiguration {
     }
 
     public boolean isUseEmptySettings() {
-        return useEmptySettings;
+        return settingsFile == null;
     }
 }

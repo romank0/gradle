@@ -22,7 +22,6 @@ import org.gradle.api.artifacts.ModuleIdentifier;
 import org.gradle.api.artifacts.ModuleVersionSelector;
 import org.gradle.api.initialization.Settings;
 import org.gradle.api.internal.BuildDefinition;
-import org.gradle.api.internal.StartParameterInternal;
 import org.gradle.api.internal.artifacts.DefaultModuleIdentifier;
 import org.gradle.api.internal.artifacts.DefaultModuleVersionSelector;
 import org.gradle.api.invocation.Gradle;
@@ -52,7 +51,7 @@ public class DefaultAutoAppliedPluginRegistry implements AutoAppliedPluginRegist
 
     @Override
     public PluginRequests getAutoAppliedPlugins(Settings target) {
-        if (((StartParameterInternal) target.getStartParameter()).isUseEmptySettingsWithoutDeprecationWarning()) {
+        if (target.getStartParameter().getSettingsFile() == null) {
             return PluginRequests.EMPTY;
         }
 
