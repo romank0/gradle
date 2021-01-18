@@ -403,8 +403,16 @@ public class Maven2Gradle {
         Plugin compilerPlugin = plugin("maven-compiler-plugin", project);
         if (compilerPlugin != null) {
             Xpp3Dom configuration = (Xpp3Dom) compilerPlugin.getConfiguration();
-            source = configuration.getChild("source").getValue();
-            target = configuration.getChild("target").getValue();
+            if (configuration != null) {
+                Xpp3Dom configuredSource = configuration.getChild("source");
+                Xpp3Dom configuredTarget = configuration.getChild("target");
+                if (configuredSource != null) {
+                    source = configuredSource.getValue();
+                }
+                if (configuredTarget != null) {
+                    target = configuredTarget.getValue();
+                }
+            }
         }
 
         builder.propertyAssignment(null, "java.sourceCompatibility", JavaVersion.toVersion(source));
